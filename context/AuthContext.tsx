@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactNode, createContext, useContext } from "react";
+import React, { useState, useEffect, ReactNode, createContext } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -15,6 +15,7 @@ export type AuthShape = {
   signUp: (email: string, password: string) => void;
   logIn: (email: string, password: string) => void;
   logOut: () => void;
+  loading: boolean
 };
 
 export type AuthProps = {
@@ -52,6 +53,7 @@ export const MyAuthContextProvider = ({ children }: AuthProps) => {
     logIn,
     signUp,
     logOut,
+    loading,
   };
 
   return <AuthContext.Provider value={value}> {!loading && children} </AuthContext.Provider> 

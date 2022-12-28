@@ -38,13 +38,11 @@ const Login = ({ user }: LoginProps) => {
     }
     await signUp(email, password);
   };
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user]);
+
   return (
     <>
       {!user ? (
-        <div className="flex-1 flex items-center justify-center gap-2 sm:gap-4 flex-col bg-black h-[90vh] text-white text-xs sm:text-sm md:text-lg">
+        <div className="overflow-hidden fixed w-screen h-screen flex-1 flex items-center justify-center gap-2 sm:gap-4 flex-col bg-black text-white text-xs sm:text-sm md:text-lg z-50">
           <h1 className="font-extrabold text-2xl sm:text-4xl select-none">
             {isSigningIn ? "Sign in" : "Create an account"}
           </h1>
