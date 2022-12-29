@@ -15,7 +15,7 @@ interface HeaderProps {
 
 const Header = ({ user, modalOpen, setModalOpen }: HeaderProps) => {
   return (
-    <header className="fixed h-[45px] top-0 z-20 flex w-full items-center justify-between bg-[#1D1D1F] text-white">
+    <header className="fixed h-[45px] top-0 z-20 flex w-full items-center justify-between bg-black/80 text-white">
       <div className="flex items-center justify-center w-1/5 md:hidden ">
       <TbMenu className="headerIcon" />
       </div>
