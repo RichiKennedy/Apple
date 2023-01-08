@@ -6,6 +6,8 @@
         "firebaseapp",
         "firestore",
         "googleusercontent",
+        "headlessui",
+        "storeimages",
         "tailwindcss",
         "unoptimized"
     ]
