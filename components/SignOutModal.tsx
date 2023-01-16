@@ -1,33 +1,48 @@
 import React, { useContext } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import AuthContext from "../context/AuthContext";
+import { UserType } from "../types/UserType";
+import CloseButton from "./buttons/CloseButton";
 
 interface ModalProps {
-    setModalOpen: (arg: boolean) => void
+  setModalOpen: (arg: boolean) => void;
+  user?: UserType;
+  setSignIn: (arg: boolean) => void;
 }
 
-const SignOutModal = ({setModalOpen}:ModalProps) => {
-    const {logOut} = useContext(AuthContext)
+const SignOutModal = ({ setModalOpen, user, setSignIn }: ModalProps) => {
+  const { logOut, logIn } = useContext(AuthContext);
   return (
-    <div className="fixed w-screen h-screen top-0 left-0 bg-white flex flex-col z-50">
+
+    <div className="fixed top-0 left-0 z-50 flex h-screen w-screen flex-col bg-white">
       <section className="flex items-center justify-between border-b border-solid border-slate-900 p-4">
-        <h2 className="font-extrabold text-2xl sm:text-5xl select-none">MENU</h2>
-    <MdOutlineClose onClick={() => setModalOpen(false)} className="duration-300 hover:rotate-90 cursor-pointer text-lg sm:text-3xl"/>
+        <h2 className="select-none text-2xl font-extrabold sm:text-5xl">
+          MENU
+        </h2>
+        <CloseButton onClick={() => setModalOpen(false)}/>
       </section>
-      <section className="flex flex-col p-4 gap-3">
-        <button onClick={() => {
-            logOut()
-            setModalOpen(false)
-        }} className="select-none duration-300 hover:pl-2 cursor-pointer">Sign Out</button>
-        {/* {user ? (
+      <section className="flex flex-col gap-3 p-4">
+        {user ? (
           <button
-            className="bg-gray-400 p-1 border-slate-900 w-[100px] text-sm hover:scale-105"
-            onClick={() => auth.signOut()}
+            onClick={() => {
+              logOut();
+              setModalOpen(false);
+            }}
+            className="cursor-pointer select-none duration-300 hover:pl-2"
           >
-            {" "}
-            SIGN OUT{" "}
+            Sign Out
           </button>
-        ) : null} */}
+        ) : (
+          <button
+            onClick={() => {
+              setModalOpen(false);
+              setSignIn(true)
+            }}
+            className="cursor-pointer select-none duration-300 hover:pl-2"
+          >
+            Sign In
+          </button>
+        )}
       </section>
     </div>
   );

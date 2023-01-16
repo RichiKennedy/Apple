@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { AiOutlineRight } from "react-icons/ai";
-import BuyButton from "./BuyButton";
+import BuyButton from "./buttons/BuyButton";
 import WowBanner from "./WowBanner";
 
 const LandingPage = () => {
@@ -28,12 +28,13 @@ const LandingPage = () => {
             {/* <BuyButton title="Buy now" padding="100px" /> */}
           </span>
         </h1>
-        <div className="relative h-[450px] w-full md:w-[70vw] lg:w-[50vw]">
+        <div className="relative h-[450px] xl:h-[900px] w-full md:w-[70vw] lg:w-[50vw] xl:[100vw]">
           <Image
             src="/Apple-iPhone-14.jpeg"
             alt="iPhone 14"
             layout="fill"
             objectFit="cover"
+            priority={true}
           />
         </div>
       </div>

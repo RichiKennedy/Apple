@@ -7,22 +7,24 @@ import { UserType } from "../types/UserType";
 import AuthContext from "../context/AuthContext";
 
 interface LoginProps {
-  user?: UserType | string;
+  user?: UserType 
+  signIn: boolean
+  setSignIn: (arg: boolean) => void
 }
 
-const Login = ({ user }: LoginProps) => {
+const Login = ({ user, signIn, setSignIn }: LoginProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isSigningIn, setIsSigningIn] = useState(true);
-
   const googleAuth = new GoogleAuthProvider();
+
   const googleLogin = async () => {
     const result = await signInWithPopup(auth, googleAuth);
+    setSignIn(false)
   };
-  const { logIn, signUp, currentUser } = useContext(AuthContext);
-  console.log(currentUser)
-
+  const { logIn, signUp, currentUser, loggedIn, setLoggedIn } = useContext(AuthContext);
+  
   const submitHandler = async () => {
     if (!email || !password) {
       setError("Please enter a valid Email and Password");
@@ -31,6 +33,7 @@ const Login = ({ user }: LoginProps) => {
     if (isSigningIn) {
       try {
         await logIn(email, password);
+        setSignIn(false)
       } catch (err) {
         setError("incorrect email or password");
       }
@@ -38,10 +41,10 @@ const Login = ({ user }: LoginProps) => {
     }
     await signUp(email, password);
   };
-
+  
   return (
     <>
-      {!user ? (
+      {signIn ? (
         <div className="overflow-hidden fixed w-screen h-screen flex-1 flex items-center justify-center gap-2 sm:gap-4 flex-col bg-black text-white text-xs sm:text-sm md:text-lg z-50">
           <h1 className="font-extrabold text-2xl sm:text-4xl select-none">
             {isSigningIn ? "Sign in" : "Create an account"}
@@ -79,6 +82,12 @@ const Login = ({ user }: LoginProps) => {
           >
             {!isSigningIn ? "Sign In" : "Create Account"}
           </h2>
+          <h2
+            className="duration-300 hover:scale-105 cursor-pointer"
+            onClick={() => setSignIn(false)}
+          >
+            Continue as guest
+          </h2>
           <div className="inline-flex justify-center items-center w-full">
             <hr className="my-8 w-64 h-px bg-gray-400 border-0 " />
             <span className="absolute left-1/2 px-3 font-medium text-gray-900 bg-black -translate-x-1/2 dark:text-white ">
@@ -95,7 +104,7 @@ const Login = ({ user }: LoginProps) => {
           </button>
           <h1> welcome guest </h1>
         </div>
-      ) : null}
+      ): alert('already Signed in')}
     </>
   );
 };

@@ -11,11 +11,13 @@ import { UserType } from "../types/UserType";
 
 
 export type AuthShape = {
-  currentUser: UserType | null;
+  currentUser?: UserType 
   signUp: (email: string, password: string) => void;
   logIn: (email: string, password: string) => void;
   logOut: () => void;
   loading: boolean
+  loggedIn: boolean
+  setLoggedIn: (arg: boolean) => void
 };
 
 export type AuthProps = {
@@ -24,8 +26,9 @@ export type AuthProps = {
 const AuthContext = createContext<AuthShape>({} as AuthShape);
 
 export const MyAuthContextProvider = ({ children }: AuthProps) => {
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState()
   const [loading, setLoading] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false)
 
   const signUp = (email: string, password: string) => {
     createUserWithEmailAndPassword(auth, email, password);
@@ -33,11 +36,11 @@ export const MyAuthContextProvider = ({ children }: AuthProps) => {
   };
 
   const logIn = (email: string, password: string) => {
-    return signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password)
   };
 
   const logOut = () => {
-    return signOut(auth);
+    return signOut(auth)
   };
 
   useEffect(() => {
@@ -51,9 +54,11 @@ export const MyAuthContextProvider = ({ children }: AuthProps) => {
   const value = {
     currentUser,
     logIn,
+    setLoggedIn,
     signUp,
     logOut,
     loading,
+    loggedIn,
   };
 
   return <AuthContext.Provider value={value}> {!loading && children} </AuthContext.Provider> 
